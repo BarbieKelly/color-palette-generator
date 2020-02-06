@@ -1,5 +1,7 @@
 # Color Palette Generator
 
+#
+
 Your task is to implement a React color palette generator similar to the one at https://coolors.co
 
 Your app should:
