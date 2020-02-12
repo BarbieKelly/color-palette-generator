@@ -1,12 +1,14 @@
-const Color = props => {
-    
-    let { color, toggle } = props;
-    let { hex, isLocked } = color;
-
-    return (
-        <div style={{ backgroundColor: hex }} className="w-100 d-flex flex-column align-items-center justify-content-center">
-            <h1>{hex}</h1>
-            <button onClick={toggle} className={isLocked ? 'btn btn-dark' : 'btn btn-outline-dark'}>{isLocked ? 'UNLOCK' : 'LOCK'}</button>
-        </div>
-    )
+class Color extends React.Component {
+    render () {
+        return (
+            <div>
+                <div style={{backgroundColor: this.props.hex}}>
+                    <h6>{this.props.hex}</h6>
+                    <button type="button" className = {this.props.locked ? 'btn btn-dark' : 'btn btn-outline-dark'} onClick={this.props.onClick}>
+                        {this.props.locked ? 'UNLOCK' : 'LOCK' }
+                    </button>
+                </div>
+            </div>
+        );
+    }
 }

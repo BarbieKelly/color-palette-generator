@@ -1,20 +1,39 @@
 class App extends React.Component {
     constructor(props) {
         super(props);
+
         let initialState = {
             colors: [
-                {hex: "#54c06c", isLocked: false},
-                {hex: "#e4d623", isLocked: false},
-                {hex: "#b5453f", isLocked: false},
-                {hex: "#e8630c", isLocked: false},
-                {hex: "#5d1170", isLocked: false}
-            ]
+                {hex: "#add8e6", isLocked: false},
+                {hex: "#add8e6", isLocked: false},
+                {hex: "#add8e6", isLocked: false},
+                {hex: "#add8e6", isLocked: false},
+                {hex: "#add8e6", isLocked: false}
+            ],
+            foo: 'bar'
         }
 
-        this.state = initialState;
+        this.state = initialState
     }
 
-    toggleLock(i) {
+    randomizeClick () {
+        let newColors = this.state.colors.map(colorObject => {
+            if (!colorObject.isLocked) {
+                return {
+                    ...colorObject,
+                    hex: '#' + Math.floor(Math.random() * 16777215).toString(16)
+                }
+            } else {
+                return colorObject
+            }
+        })
+    
+        this.setState({
+            colors: newColors
+        });
+    }
+
+    lockClick(i) {
         let newColors = this.state.colors.map((color, index) => {
             if (i === index) {
                 return {
@@ -31,35 +50,16 @@ class App extends React.Component {
         });
     }
 
-    randomize() {
-        let newColors = this.state.colors.map(color => {
-            if (!color.isLocked) {
-                return {
-                    ...color,
-                    hex: '#' + Math.floor(Math.random() * 16777215).toString(16)
-                }
-            } else {
-                return color
-            }
-        })
-
-        this.setState({
-            colors: newColors
-        });
-    }
-
-    render() {
+    render () {
         return (
             <div>
-                <div className="text-center bg-dark fixed-top">
-                    <button onClick={() => this.randomize()} className="btn btn-secondary m-1">RANDOMIZE COLORS</button>
-                </div>
-                <div className="w-100 d-flex" style={{height: "100vh"}}>
-                    {
-                        this.state.colors.map((color, i) => <Color color={color} key={i} toggle={() => this.toggleLock(i)}/>)
-                    }
-                </div>
+                <button type="button" className="btn btn-primary" onClick={this.randomizeClick.bind(this)}>Randomize</button>
+                <Color key={0} hex={this.state.colors[0].hex} locked={this.state.colors[0].isLocked} onClick={() => {this.lockClick(0);}} />
+                <Color key={1} hex={this.state.colors[1].hex} locked={this.state.colors[1].isLocked} onClick={() => {this.lockClick(1);}}/>
+                <Color key={2} hex={this.state.colors[2].hex} locked={this.state.colors[2].isLocked} onClick={() => {this.lockClick(2);}}/>
+                <Color key={3} hex={this.state.colors[3].hex} locked={this.state.colors[3].isLocked} onClick={() => {this.lockClick(3);}}/>
+                <Color key={4} hex={this.state.colors[4].hex} locked={this.state.colors[4].isLocked} onClick={() => {this.lockClick(4);}}/>
             </div>
-        )
+        );
     }
 }
